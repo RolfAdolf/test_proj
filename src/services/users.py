@@ -36,7 +36,7 @@ class UsersService:
 
     @staticmethod
     def create_token(user_id: int) -> JwtToken:
-        now = datetime.utcnow()
+        now = datetime.datetime.utcnow()
         payload = {
             'iat': now,
             'exp': now + timedelta(seconds=settings.jwt_expires_seconds),
@@ -50,7 +50,7 @@ class UsersService:
         try:
             payload = jwt.encode(token, settings.jwt_secret, algorithm=[settings.jwt_algorithm])
         except JWTError:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Некерректный токен')
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Некорректный токен')
 
         return payload.get('sub')
 
@@ -67,7 +67,7 @@ class UsersService:
                 .query(User)
                 .filter(User.username == username)
                 .first()
-            )
+                )
 
         if not user:
             return None

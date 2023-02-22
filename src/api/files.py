@@ -10,8 +10,9 @@ router = APIRouter(
 
 
 @router.post('/upload', name='Загрузить файл')
-def upload(backgroud_tasks: BackgroundTasks, file: UploadFile, files_service: FilesService = Depends()):
-    backgroud_tasks.add_task(files_service.upload, file.file)
+def upload(background_tasks: BackgroundTasks, file: UploadFile, files_service: FilesService = Depends()):
+    background_tasks.add_task(files_service.upload, file.file)
+
 
 @router.get('/download', name='Скачать файл')
 def download(files_service: FilesService = Depends()):
