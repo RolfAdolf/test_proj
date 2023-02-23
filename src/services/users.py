@@ -48,7 +48,7 @@ class UsersService:
     @staticmethod
     def verify_token(token: str) -> Optional[int]:
         try:
-            payload = jwt.encode(token, settings.jwt_secret, algorithm=[settings.jwt_algorithm])
+            payload = jwt.decode(token, settings.jwt_secret, algorithm=[settings.jwt_algorithm])
         except JWTError:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Некорректный токен')
 
